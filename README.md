@@ -2,7 +2,8 @@
 Storage resources with socket.io for sailsjs
 
 
-## Installation
+## Installation &nbsp; [![NPM version](https://badge.fury.io/js/sails-store.svg)](http://badge.fury.io/js/sails-store) [![Build Status](https://travis-ci.org/wi2/sails-store.png?branch=master)](https://travis-ci.org/wi2/sails-store)
+
 
 ```sh
 $ npm install sails-store
