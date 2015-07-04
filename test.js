@@ -3,37 +3,64 @@ var Store = require('./index.js').Store;
 var StoreItem = require('./index.js').StoreItem;
 var StoreCollection = require('./index.js').StoreCollection;
 
-describe('The reactItemButton component', function() {
 
-  describe('when no props are given', function() {
-    var store, storeI, storeC;
+describe('Simulate wevsocket events with onChange function', function() {
 
-    beforeEach(function(done) {
+  describe('When use StoreCollection', function() {
+    var store;
+    before(function(done) {
       store = new StoreCollection({
         identity: "user"
       });
+      done()
+    });
+    it('url should equal to /user', function() {
+      assert.equal(store.url, '/user');
+    });
+    it('should event sync is a function', function() {
+      assert.equal(typeof store._events.sync, 'function');
+    });
+    it('should emit an created event and have 2 records', function() {
+      store.add({name:'Mike', id:1});
+      store.on('add', function(data){
+        assert.equal(data[0].name, 'Mike');
+        assert.equal(data.length, 2);
+      });
+      store.onChange({verb: 'created', data: {id:2, name:"John"}});
+    });
+    it('should emit a updated event and return an object have Name is Johnny', function() {
+      store.on('update', function(data){
+        assert.equal(data[1].name, 'Johnny');
+        assert.equal(data.length, 3);
+      });
+      store.onChange({verb: 'updated', data: [{id:1, name:"Mike"}, {id:2, name:"Johnny"}, {id:3, name:"Paul"}]});
+    });
+    it('should emit a desroyed event and have 2 record', function() {
+      store.on('remove', function(data){
+        assert.equal(data.length, 2);
+      });
+      store.onChange({verb: 'destroyed', id: 1});
+    });
+  });
+
+  describe('When use StoreItem', function() {
+    var storeI;
+    before(function(done) {
       storeI = new StoreItem({
         identity: "user",
-        value: {id: 5}
-      });
-      storeC = new StoreCollection({
-        identity: "user",
-        items: []
+        value: {id: 5, name: 'Mike'}
       });
       done()
     });
-
-
-    it('check url for store class', function() {
-      assert.equal(store.url, '/user');
-    });
-    it('check url for store Item class', function() {
+    it('url should equal to /user/5', function() {
       assert.equal(storeI.url, '/user/5');
     });
-    it('check url for store Collection class', function() {
-      assert.equal(storeC.url, '/user');
+    it('should emit a updated event and return an object have Name is Johnny', function() {
+      storeI.on('update', function(data){
+        assert.equal(data.name, 'Johnny');
+      });
+      storeI.onChange({verb: 'updated', data:{name:"Johnny"}});
     });
-
   });
 
 
