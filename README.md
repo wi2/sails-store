@@ -10,6 +10,42 @@ $ npm install sails-store
 ```
 
 ## Usage
+```
+var StorSails = require('sails-store');
+
+sItem = StorSails.StoreItem({
+  identity: "user",
+  id: 2
+});
+
+sItem.get()
+
+sItem.on('updated', function(data){
+  console.log(data);
+});
+sItem.modify({})
+
+///
+
+
+sCollection = StorSails.StoreItem({
+  identity: "user"
+});
+
+sCollection.get()
+
+sCollection.on('created', function(data){
+  console.log(data);
+});
+sCollection.add({});
+
+sCollection.on('destroyed', function(data){
+  console.log(data);
+});
+sCollection.remove({});
+
+
+```
 
 
 
