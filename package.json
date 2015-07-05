@@ -1,6 +1,6 @@
 {
   "name": "sails-store",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Storage resources with socket.io for sailsjs",
   "scripts": {
     "test": "npm run prepublish && mocha --compilers js:babel-core/register test.js",
