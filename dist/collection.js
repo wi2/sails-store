@@ -55,8 +55,29 @@ var StoreCollection = (function (_Store) {
   }, {
     key: 'findAndUpdate',
     value: function findAndUpdate(data) {
-      for (var i = 0, len = this.value.length; i < len; i++) {
-        if (this.value[i].id === data.id) this.value[i] = data;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.values[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var val = _step.value;
+
+          if (val.id === data.id) val = data;
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator['return']) {
+            _iterator['return']();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
       }
     }
   }, {

@@ -22,15 +22,14 @@ export class StoreCollection extends Store {
   remove(id) {
     if (id.id)
       id = id.id;
-    var newVal = this.value.filter(function(elem) {return elem.id !== id;});
+    var newVal = this.value.filter((elem) => {return elem.id !== id;});
     this.value = newVal;
     this.emit('remove', this.value);
   }
   findAndUpdate(data) {
-    for (var i=0,len=this.value.length;i<len;i++){
-      if (this.value[i].id === data.id)
-        this.value[i] = data;
-    }
+    for (var val of this.values)
+      if (val.id === data.id)
+        val = data;
   }
   onChange (msg) {
     switch(msg.verb) {
