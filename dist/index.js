@@ -4,12 +4,12 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _baseJs = require('./base.js');
+var _storeJs = require('./store.js');
 
 Object.defineProperty(exports, 'Store', {
   enumerable: true,
   get: function get() {
-    return _baseJs.Store;
+    return _storeJs.Store;
   }
 });
 

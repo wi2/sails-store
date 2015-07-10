@@ -1,4 +1,4 @@
-import {Store} from './base.js'
+import {Store} from './store.js'
 
 export class StoreCollection extends Store {
   constructor(props) {
