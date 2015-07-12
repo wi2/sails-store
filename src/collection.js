@@ -8,12 +8,10 @@ export class StoreCollection extends Store {
     this.on('sync', this.findAndUpdate.bind(this));
   }
   create(data) {
-    if (typeof io !== "undefined")
-      io.socket.post(this.url, data, this.add.bind(this));
+    this.socket.post(data, this.add.bind(this));
   }
   delete(id) {
-    if (typeof io !== "undefined")
-      io.socket.delete(this.url+"/"+id, {}, this.remove.bind(this));
+    this.socket.delete(id, this.remove.bind(this));
   }
   add(data) {
     this.value.push(data);

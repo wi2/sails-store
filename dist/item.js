@@ -20,7 +20,7 @@ var StoreItem = (function (_Store) {
 
     _get(Object.getPrototypeOf(StoreItem.prototype), 'constructor', this).call(this, props);
     this.value = props.value || {};
-    this.url += '/' + this.value.id || '';
+    this.socket.adjustUrlWithId(this.value.id);
   }
 
   _inherits(StoreItem, _Store);
@@ -29,13 +29,12 @@ var StoreItem = (function (_Store) {
     key: 'init',
     value: function init(data) {
       this.value = data;
-      this.url = '/' + this.identity;
-      this.url += '/' + this.value.id;
+      this.socket.adjustUrlWithId(this.value.id);
     }
   }, {
     key: 'modify',
     value: function modify(data) {
-      if (typeof io !== 'undefined') io.socket.put(this.url, data, this.update.bind(this));
+      this.socket.put(data, this.update.bind(this));
     }
   }, {
     key: 'onChange',

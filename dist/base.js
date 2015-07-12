@@ -17,7 +17,6 @@ var Base = (function (_EventEmitter) {
     _classCallCheck(this, Base);
 
     _get(Object.getPrototypeOf(Base.prototype), 'constructor', this).call(this, props);
-    this.identity = props.identity;
     this.belongs = props.belongs;
   }
 

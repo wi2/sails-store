@@ -29,12 +29,12 @@ var StoreCollection = (function (_Store) {
   _createClass(StoreCollection, [{
     key: 'create',
     value: function create(data) {
-      if (typeof io !== 'undefined') io.socket.post(this.url, data, this.add.bind(this));
+      this.socket.post(data, this.add.bind(this));
     }
   }, {
     key: 'delete',
     value: function _delete(id) {
-      if (typeof io !== 'undefined') io.socket['delete'](this.url + '/' + id, {}, this.remove.bind(this));
+      this.socket['delete'](id, this.remove.bind(this));
     }
   }, {
     key: 'add',
