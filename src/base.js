@@ -6,6 +6,3 @@ export class Base extends EventEmitter {
     this.belongs = props.belongs;
   }
 }
-
-
-
