@@ -8,7 +8,13 @@ export class Store extends Base {
       identity: props.identity,
       root: props.root
     });
+    this.startListening();
+  }
+  startListening() {
     this.socket.on(this.onChange.bind(this));
+  }
+  stopListening() {
+    this.socket.off();
   }
   get () {
     this.socket.get(this.update.bind(this));

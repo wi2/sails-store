@@ -11,6 +11,10 @@ export class Transport {
     if (!this.socket) return;
     this.socket.on(this.identity, cb);
   }
+  off() {
+    if (!this.socket) return;
+    this.socket.off(this.identity);
+  }
   get(cb) {
     if (!this.socket) return;
     this.socket.get(this.url, cb);
