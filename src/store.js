@@ -8,13 +8,17 @@ export class Store extends Base {
       identity: props.identity,
       root: props.root
     });
+    this.listening = false;
     this.startListening();
   }
   startListening() {
+    if (this.listening) return;
+    this.listening = true;
     this.socket.on(this.onChange.bind(this));
   }
   stopListening() {
     this.socket.off();
+    this.listening = false;
   }
   get () {
     this.socket.get(this.update.bind(this));

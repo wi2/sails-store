@@ -25,6 +25,12 @@ var Transport = (function () {
       this.socket.on(this.identity, cb);
     }
   }, {
+    key: "off",
+    value: function off() {
+      if (!this.socket) return;
+      this.socket.off(this.identity);
+    }
+  }, {
     key: "get",
     value: function get(cb) {
       if (!this.socket) return;

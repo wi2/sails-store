@@ -25,15 +25,24 @@ var Store = (function (_Base) {
       identity: props.identity,
       root: props.root
     });
-    this.socket.on(this.onChange.bind(this));
+    this.listening = false;
+    this.startListening();
   }
 
   _inherits(Store, _Base);
 
   _createClass(Store, [{
-    key: 'init',
-    value: function init(data) {
-      this.value = data;
+    key: 'startListening',
+    value: function startListening() {
+      if (this.listening) return;
+      this.listening = true;
+      this.socket.on(this.onChange.bind(this));
+    }
+  }, {
+    key: 'stopListening',
+    value: function stopListening() {
+      this.socket.off();
+      this.listening = false;
     }
   }, {
     key: 'get',
@@ -46,6 +55,11 @@ var Store = (function (_Base) {
       this.value = data;
       this.emit('update', this.value);
       if (this.belongs) this.belongs.emit('sync', this.value);
+    }
+  }, {
+    key: 'setItems',
+    value: function setItems(data) {
+      this.value = data;
     }
   }, {
     key: 'onChange',
