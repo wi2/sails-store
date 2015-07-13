@@ -10,9 +10,6 @@ export class Store extends Base {
     });
     this.socket.on(this.onChange.bind(this));
   }
-  init(data) {
-    this.value = data;
-  }
   get () {
     this.socket.get(this.update.bind(this));
   }
@@ -21,6 +18,9 @@ export class Store extends Base {
     this.emit('update', this.value);
     if (this.belongs)
       this.belongs.emit('sync', this.value);
+  }
+  setItems(data) {
+    this.value = data;
   }
   onChange(msg) {}
 }
