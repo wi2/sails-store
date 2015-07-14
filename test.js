@@ -17,6 +17,13 @@ describe('Simulate wevsocket events with onChange function', function() {
     it('url should equal to /user', function() {
       assert.equal(store.socket.url, '/user');
     });
+    it('listening should equal true', function() {
+      assert.equal(store.listening, true);
+    });
+    it('listening should equal false', function() {
+      store.stopListening();
+      assert.equal(store.listening, false);
+    });
     it('should event sync is a function', function() {
       assert.equal(typeof store._events.sync, 'function');
     });
@@ -54,6 +61,17 @@ describe('Simulate wevsocket events with onChange function', function() {
     });
     it('url should equal to /user/5', function() {
       assert.equal(storeI.socket.url, '/user/5');
+    });
+    it('listening should equal true', function() {
+      assert.equal(storeI.listening, true);
+    });
+    it('listening should equal false', function() {
+      storeI.stopListening();
+      assert.equal(storeI.listening, false);
+    });
+    it('url should equal /user/1', function() {
+      storeI.setItems({id: 1, name: 'Paul'});
+      assert.equal(storeI.socket.url, '/user/1');
     });
     it('should emit a updated event and return an object have Name is Johnny', function() {
       storeI.on('update', function(data){
