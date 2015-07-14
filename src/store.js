@@ -24,7 +24,7 @@ export class Store extends Base {
     this.socket.get(this.update.bind(this));
   }
   update(data) {
-    this.value = data;
+    this.setItems(data);
     this.emit('update', this.value);
     if (this.belongs)
       this.belongs.emit('sync', this.value);

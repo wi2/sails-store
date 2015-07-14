@@ -52,7 +52,7 @@ var Store = (function (_Base) {
   }, {
     key: 'update',
     value: function update(data) {
-      this.value = data;
+      this.setItems(data);
       this.emit('update', this.value);
       if (this.belongs) this.belongs.emit('sync', this.value);
     }

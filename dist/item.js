@@ -26,8 +26,8 @@ var StoreItem = (function (_Store) {
   _inherits(StoreItem, _Store);
 
   _createClass(StoreItem, [{
-    key: 'init',
-    value: function init(data) {
+    key: 'setItems',
+    value: function setItems(data) {
       this.value = data;
       this.socket.adjustUrlWithId(this.value.id);
     }

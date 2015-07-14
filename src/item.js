@@ -6,7 +6,7 @@ export class StoreItem extends Store {
     this.value = props.value||{};
     this.socket.adjustUrlWithId(this.value.id);
   }
-  init(data) {
+  setItems(data) {
     this.value = data;
     this.socket.adjustUrlWithId(this.value.id);
   }
