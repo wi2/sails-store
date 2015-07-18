@@ -19,7 +19,8 @@ var StoreItem = (function (_Store) {
     _classCallCheck(this, StoreItem);
 
     _get(Object.getPrototypeOf(StoreItem.prototype), 'constructor', this).call(this, props);
-    this.value = Object.assign({}, props.value);
+    this.value = {};
+    this.objectAssign(this.value, props.value);
     this.socket.adjustUrlWithId(this.value.id);
   }
 
@@ -28,7 +29,6 @@ var StoreItem = (function (_Store) {
   _createClass(StoreItem, [{
     key: 'setItems',
     value: function setItems(data) {
-      // Object.assign(this.value, data);
       this.objectAssign(this.value, data);
       this.socket.adjustUrlWithId(this.value.id);
     }

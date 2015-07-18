@@ -31,7 +31,6 @@ export class Store extends Base {
   }
   setItems(data) {
     this.objectAssign(this.value, data);
-    // Object.assign(this.value, data);
   }
   onChange(msg) {}
 }
