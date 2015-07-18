@@ -3,6 +3,10 @@ var Store = require('./index.js').Store;
 var StoreItem = require('./index.js').StoreItem;
 var StoreCollection = require('./index.js').StoreCollection;
 
+// var sailsIOClient = require('sails.io.js');
+// global.io = sailsIOClient(require('socket.io-client'));
+
+// global.io.sails.url = 'http://localhost:1337';
 
 describe('Simulate wevsocket events with onChange function', function() {
 

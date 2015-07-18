@@ -30,7 +30,8 @@ export class Store extends Base {
       this.belongs.emit('sync', this.value);
   }
   setItems(data) {
-    Object.assign(this.value, data);
+    this.objectAssign(this.value, data);
+    // Object.assign(this.value, data);
   }
   onChange(msg) {}
 }
