@@ -28,7 +28,8 @@ var StoreItem = (function (_Store) {
   _createClass(StoreItem, [{
     key: 'setItems',
     value: function setItems(data) {
-      Object.assign(this.value, data);
+      // Object.assign(this.value, data);
+      this.objectAssign(this.value, data);
       this.socket.adjustUrlWithId(this.value.id);
     }
   }, {

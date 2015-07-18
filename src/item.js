@@ -7,7 +7,8 @@ export class StoreItem extends Store {
     this.socket.adjustUrlWithId(this.value.id);
   }
   setItems(data) {
-    Object.assign(this.value, data);
+    // Object.assign(this.value, data);
+    this.objectAssign(this.value, data);
     this.socket.adjustUrlWithId(this.value.id);
   }
   modify(data) {
