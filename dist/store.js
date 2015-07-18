@@ -59,7 +59,7 @@ var Store = (function (_Base) {
   }, {
     key: 'setItems',
     value: function setItems(data) {
-      this.value = data;
+      Object.assign(this.value, data);
     }
   }, {
     key: 'onChange',

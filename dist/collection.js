@@ -60,10 +60,10 @@ var StoreCollection = (function (_Store) {
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = this.values[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = this.value[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var val = _step.value;
 
-          if (val.id === data.id) val = data;
+          if (val.id === data.id) Object.assign(val, data);
         }
       } catch (err) {
         _didIteratorError = true;

@@ -25,9 +25,9 @@ export class StoreCollection extends Store {
     this.emit('remove', this.value);
   }
   findAndUpdate(data) {
-    for (var val of this.values)
+    for (var val of this.value)
       if (val.id === data.id)
-        val = data;
+        Object.assign(val, data);
   }
   onChange (msg) {
     switch(msg.verb) {
