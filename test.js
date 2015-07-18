@@ -35,12 +35,18 @@ describe('Simulate wevsocket events with onChange function', function() {
       });
       store.onChange({verb: 'created', data: {id:2, name:"John"}});
     });
-    it('should emit a updated event and return an object have Name is Johnny', function() {
+    it('should emit a updated event and return an object have Name is Johnny and is a designer', function() {
       store.on('update', function(data){
         assert.equal(data[1].name, 'Johnny');
+        assert.equal(data[1].job, 'designer');
         assert.equal(data.length, 3);
       });
-      store.onChange({verb: 'updated', data: [{id:1, name:"Mike"}, {id:2, name:"Johnny"}, {id:3, name:"Paul"}]});
+      store.onChange({verb: 'updated', data: [{id:1, name:"Mike", job:"developer"}, {id:2, name:"Johnny", job:"designer"}, {id:3, name:"Paul"}]});
+    });
+    it('should update one record (the name become Michael and is still a developer)', function() {
+      store.findAndUpdate({id:1, name:"Michael"});
+      assert.equal(store.value[0].name, 'Michael');
+      assert.equal(store.value[0].job, 'developer');
     });
     it('should emit a desroyed event and have 2 record', function() {
       store.on('remove', function(data){
@@ -72,6 +78,13 @@ describe('Simulate wevsocket events with onChange function', function() {
     it('url should equal /user/1', function() {
       storeI.setItems({id: 1, name: 'Paul'});
       assert.equal(storeI.socket.url, '/user/1');
+    });
+    it('url should equal /user/25', function() {
+      storeI.socket.adjustUrlWithId(25);
+      assert.equal(storeI.socket.url, '/user/25');
+    });
+    it('should update name to Jo', function() {
+      storeI.update({name: 'Jo'});
     });
     it('should emit a updated event and return an object have Name is Johnny', function() {
       storeI.on('update', function(data){
