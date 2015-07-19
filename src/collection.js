@@ -30,6 +30,9 @@ export class StoreCollection extends Store {
       if (this.value[i].id === data.id)
         this.objectAssign(this.value[i], data);
   }
+  setItems(data) {
+    this.value = data;
+  }
   onChange (msg) {
     switch(msg.verb) {
       case "created":

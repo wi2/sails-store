@@ -59,6 +59,11 @@ var StoreCollection = (function (_Store) {
       for (var i = 0, len = this.value.length; i < len; i++) if (this.value[i].id === data.id) this.objectAssign(this.value[i], data);
     }
   }, {
+    key: 'setItems',
+    value: function setItems(data) {
+      this.value = data;
+    }
+  }, {
     key: 'onChange',
     value: function onChange(msg) {
       switch (msg.verb) {
