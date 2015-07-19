@@ -64,7 +64,7 @@ var StoreCollection = (function (_Store) {
         for (var _iterator = this.value[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var val = _step.value;
 
-          if (val.id === data.id) Object.assign(val, data);
+          if (val.id === data.id) this.objectAssign(val, data);
         }
       } catch (err) {
         _didIteratorError = true;

@@ -28,7 +28,7 @@ export class StoreCollection extends Store {
   findAndUpdate(data) {
     for (var val of this.value)
       if (val.id === data.id)
-        Object.assign(val, data);
+        this.objectAssign(val, data);
   }
   onChange (msg) {
     switch(msg.verb) {
