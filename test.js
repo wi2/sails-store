@@ -58,6 +58,10 @@ describe('Simulate wevsocket events with onChange function', function() {
       });
       store.onChange({verb: 'destroyed', id: 1});
     });
+    it('should update one item of store', function() {
+      store.emit('sync', {id:2, name:"Bobby"});
+      assert.equal("Bobby", store.value[0].name);
+    });
   });
 
   describe('When use StoreItem', function() {
