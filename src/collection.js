@@ -5,6 +5,7 @@ export class StoreCollection extends Store {
     super(props);
     this.value = props.items||[];
     this.items = props.items;
+    this.update(this.value);
     this.on('sync', this.findAndUpdate.bind(this));
   }
   create(data) {

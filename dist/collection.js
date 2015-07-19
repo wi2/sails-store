@@ -21,6 +21,7 @@ var StoreCollection = (function (_Store) {
     _get(Object.getPrototypeOf(StoreCollection.prototype), 'constructor', this).call(this, props);
     this.value = props.items || [];
     this.items = props.items;
+    this.update(this.value);
     this.on('sync', this.findAndUpdate.bind(this));
   }
 
