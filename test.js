@@ -10,6 +10,7 @@ var StoreCollection = require('./index.js').StoreCollection;
 
 describe('Simulate wevsocket events with onChange function', function() {
 
+
   describe('When use StoreCollection', function() {
     var store;
     before(function(done) {
@@ -62,6 +63,17 @@ describe('Simulate wevsocket events with onChange function', function() {
       store.emit('sync', {id:2, name:"Bobby"});
       assert.equal("Bobby", store.value[0].name);
     });
+
+    it('should update one item of store with belongs use', function() {
+      var storeI = new StoreItem({
+        identity: store.identity,
+        value: store.value[0],
+        belongs: store
+      });
+      storeI.update({name: 'Jo'});
+      assert.equal("Jo", store.value[0].name);
+    });
+
   });
 
   describe('When use StoreItem', function() {
