@@ -4,8 +4,7 @@ export class StoreItem extends Store {
   constructor(props) {
     super(props);
     this.value = {};
-    this.objectAssign(this.value, props.value);
-    this.socket.adjustUrlWithId(this.value.id);
+    this.setItems(props.value);
   }
   setItems(data) {
     this.objectAssign(this.value, data);

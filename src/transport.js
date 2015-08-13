@@ -15,15 +15,17 @@ export class Transport {
     if (!this.socket) return;
     this.socket.off(this.identity);
   }
-  get(cb) {
+  get(data, cb) {
+    if (typeof data === 'function')
+      cb = data;
     if (!this.socket) return;
     this.socket.get(this.url, cb);
   }
-  post(cb) {
+  post(data, cb) {
     if (!this.socket) return;
     this.socket.post(this.url, data, cb);
   }
-  put(cb) {
+  put(data, cb) {
     if (!this.socket) return;
     this.socket.put(this.url, data, cb);
   }

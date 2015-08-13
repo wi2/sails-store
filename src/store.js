@@ -8,7 +8,6 @@ export class Store extends Base {
       identity: props.identity,
       root: props.root
     });
-    this.listening = false;
     this.startListening();
   }
   startListening() {

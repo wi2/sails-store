@@ -25,7 +25,6 @@ var Store = (function (_Base) {
       identity: props.identity,
       root: props.root
     });
-    this.listening = false;
     this.startListening();
   }
 

@@ -20,8 +20,7 @@ var StoreItem = (function (_Store) {
 
     _get(Object.getPrototypeOf(StoreItem.prototype), 'constructor', this).call(this, props);
     this.value = {};
-    this.objectAssign(this.value, props.value);
-    this.socket.adjustUrlWithId(this.value.id);
+    this.setItems(props.value);
   }
 
   _inherits(StoreItem, _Store);

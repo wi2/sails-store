@@ -32,19 +32,20 @@ var Transport = (function () {
     }
   }, {
     key: "get",
-    value: function get(cb) {
+    value: function get(data, cb) {
+      if (typeof data === "function") cb = data;
       if (!this.socket) return;
       this.socket.get(this.url, cb);
     }
   }, {
     key: "post",
-    value: function post(cb) {
+    value: function post(data, cb) {
       if (!this.socket) return;
       this.socket.post(this.url, data, cb);
     }
   }, {
     key: "put",
-    value: function put(cb) {
+    value: function put(data, cb) {
       if (!this.socket) return;
       this.socket.put(this.url, data, cb);
     }

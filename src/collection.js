@@ -4,7 +4,6 @@ export class StoreCollection extends Store {
   constructor(props) {
     super(props);
     this.value = props.items||[];
-    this.items = props.items;
     this.update(this.value);
     this.on('sync', this.findAndUpdate.bind(this));
   }
