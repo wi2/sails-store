@@ -17,7 +17,7 @@ describe('collection testing', function() {
     done();
   });
 
-  describe('item', function() {
+  describe('collection', function() {
 
     it('url should equal to /user', function() {
       assert.equal(store.socket.url, '/user');
