@@ -19,21 +19,14 @@ var StoreItem = (function (_Store) {
     _classCallCheck(this, StoreItem);
 
     _get(Object.getPrototypeOf(StoreItem.prototype), 'constructor', this).call(this, props);
-    this.value = {};
-    this.setItems(props.value);
+    this._value = props.value || props.item || {};
   }
 
   _inherits(StoreItem, _Store);
 
   _createClass(StoreItem, [{
-    key: 'setItems',
-    value: function setItems(data) {
-      this.objectAssign(this.value, data);
-      this.socket.adjustUrlWithId(this.value.id);
-    }
-  }, {
-    key: 'modify',
-    value: function modify(data) {
+    key: 'put',
+    value: function put(data) {
       this.socket.put(data, this.update.bind(this));
     }
   }, {
@@ -42,6 +35,14 @@ var StoreItem = (function (_Store) {
       if (msg.verb === 'updated' && msg.id === this.value.id) {
         this.update(msg.data);
       }
+    }
+  }, {
+    key: 'value',
+    get: function get() {
+      return this._value;
+    },
+    set: function set(data) {
+      this.objectAssign(this._value, data);
     }
   }]);
 

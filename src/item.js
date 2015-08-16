@@ -1,21 +1,27 @@
 import {Store} from './store.js'
 
 export class StoreItem extends Store {
-  constructor(props) {
+  constructor(props){
     super(props);
-    this.value = {};
-    this.setItems(props.value);
+    this._value = props.value||props.item||{};
   }
-  setItems(data) {
-    this.objectAssign(this.value, data);
-    this.socket.adjustUrlWithId(this.value.id);
+
+  get value() {
+    return this._value;
   }
-  modify(data) {
+  set value(data) {
+    this.objectAssign(this._value, data);
+  }
+
+  put(data) {
     this.socket.put(data, this.update.bind(this));
   }
-  onChange (msg) {
+
+  onChange(msg) {
     if (msg.verb === 'updated' && msg.id === this.value.id) {
       this.update(msg.data);
     }
   }
+
+
 }

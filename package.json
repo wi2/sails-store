@@ -3,7 +3,7 @@
   "version": "0.2.10",
   "description": "Storage resources with socket.io for sailsjs, useful for this module sails-react-store",
   "scripts": {
-    "test": "npm run prepublish && mocha --compilers js:babel-core/register test.js",
+    "test": "npm run prepublish && mocha --compilers js:babel-core/register test/test-*.js",
     "prepublish": "babel src --out-dir dist"
   },
   "keywords": [
@@ -15,6 +15,7 @@
   "author": "wi2",
   "license": "MIT",
   "dependencies": {
+    "immutable": "^3.7.4",
     "object-assign": "^3.0.0"
   },
   "devDependencies": {

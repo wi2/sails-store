@@ -3,16 +3,24 @@ import {Store} from './store.js'
 export class StoreCollection extends Store {
   constructor(props) {
     super(props);
-    this.value = props.items||[];
-    this.update(this.value);
+    this._value = props.value||props.items||[];
     this.on('sync', this.findAndUpdate.bind(this));
   }
-  create(data) {
+
+  get value() {
+    return this._value;
+  }
+  set value(data) {
+    this._value = data;
+  }
+
+  post(data) {
     this.socket.post(data, this.add.bind(this));
   }
   delete(id) {
     this.socket.delete(id, this.remove.bind(this));
   }
+
   add(data) {
     this.value.push(data);
     this.emit('add', this.value);
@@ -24,14 +32,13 @@ export class StoreCollection extends Store {
     this.value = newVal;
     this.emit('remove', this.value);
   }
+
   findAndUpdate(data) {
     for (var i=0, len=this.value.length; i < len; i++)
       if (this.value[i].id === data.id)
         this.objectAssign(this.value[i], data);
   }
-  setItems(data) {
-    this.value = data;
-  }
+
   onChange (msg) {
     switch(msg.verb) {
       case "created":

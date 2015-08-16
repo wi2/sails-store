@@ -19,16 +19,15 @@ var StoreCollection = (function (_Store) {
     _classCallCheck(this, StoreCollection);
 
     _get(Object.getPrototypeOf(StoreCollection.prototype), 'constructor', this).call(this, props);
-    this.value = props.items || [];
-    this.update(this.value);
+    this._value = props.value || props.items || [];
     this.on('sync', this.findAndUpdate.bind(this));
   }
 
   _inherits(StoreCollection, _Store);
 
   _createClass(StoreCollection, [{
-    key: 'create',
-    value: function create(data) {
+    key: 'post',
+    value: function post(data) {
       this.socket.post(data, this.add.bind(this));
     }
   }, {
@@ -58,11 +57,6 @@ var StoreCollection = (function (_Store) {
       for (var i = 0, len = this.value.length; i < len; i++) if (this.value[i].id === data.id) this.objectAssign(this.value[i], data);
     }
   }, {
-    key: 'setItems',
-    value: function setItems(data) {
-      this.value = data;
-    }
-  }, {
     key: 'onChange',
     value: function onChange(msg) {
       switch (msg.verb) {
@@ -76,6 +70,14 @@ var StoreCollection = (function (_Store) {
           this.remove(msg.id);
           break;
       }
+    }
+  }, {
+    key: 'value',
+    get: function get() {
+      return this._value;
+    },
+    set: function set(data) {
+      this._value = data;
     }
   }]);
 

@@ -9,9 +9,11 @@ export class Store extends EventEmitter {
     this.socket = new Transport(props);//identity & root
     this.startListening();
   }
+
   objectAssign(...col) {
     objectAssign(...col);
   }
+
   startListening() {
     if (this.listening) return;
     this.listening = true;
@@ -21,14 +23,22 @@ export class Store extends EventEmitter {
     this.socket.off();
     this.listening = false;
   }
-  get () {
+
+  get() {
     this.socket.get(this.update.bind(this));
   }
+  put() {}
+  post(data) {}
+  delete(id) {}
+
+  add(data) {}
+  remove(id) {}
   update(data) {
-    this.setItems(data);
+    this.value = data;
     this.emit('update', this.value);
     if (this.belongs)
       this.belongs.emit('sync', this.value);
   }
+
   onChange(msg) {}
 }

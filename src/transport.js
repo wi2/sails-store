@@ -1,9 +1,8 @@
 
 export class Transport {
   constructor(props) {
-    this.root = props.root||"/";
     this.identity = props.identity;
-    this.url = this.root + this.identity;
+    this.url = (props.root||"/") + this.identity + (props.value && props.value.id ? '/'+props.value.id : '');
     this.socket = typeof io !== "undefined" ? io.socket : null;
   }
 
@@ -32,9 +31,5 @@ export class Transport {
   delete(id, cb) {
     if (!this.socket || !id) return;
     this.socket.delete(this.url+"/"+id, {}, cb);
-  }
-
-  adjustUrlWithId(id) {
-    this.url = this.root + this.identity+ "/" + id;
   }
 }

@@ -58,9 +58,24 @@ var Store = (function (_EventEmitter) {
       this.socket.get(this.update.bind(this));
     }
   }, {
+    key: 'put',
+    value: function put() {}
+  }, {
+    key: 'post',
+    value: function post(data) {}
+  }, {
+    key: 'delete',
+    value: function _delete(id) {}
+  }, {
+    key: 'add',
+    value: function add(data) {}
+  }, {
+    key: 'remove',
+    value: function remove(id) {}
+  }, {
     key: 'update',
     value: function update(data) {
-      this.setItems(data);
+      this.value = data;
       this.emit('update', this.value);
       if (this.belongs) this.belongs.emit('sync', this.value);
     }
