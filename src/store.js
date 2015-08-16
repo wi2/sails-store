@@ -1,14 +1,16 @@
-import {Base} from './base.js'
+import {EventEmitter} from 'events'
+import objectAssign from 'object-assign'
 import {Transport} from './transport.js'
 
-export class Store extends Base {
+export class Store extends EventEmitter {
   constructor(props) {
     super(props);
-    this.socket = new Transport({
-      identity: props.identity,
-      root: props.root
-    });
+    this.belongs = props.belongs;
+    this.socket = new Transport(props);//identity & root
     this.startListening();
+  }
+  objectAssign(...col) {
+    objectAssign(...col);
   }
   startListening() {
     if (this.listening) return;
@@ -27,9 +29,6 @@ export class Store extends Base {
     this.emit('update', this.value);
     if (this.belongs)
       this.belongs.emit('sync', this.value);
-  }
-  setItems(data) {
-    this.objectAssign(this.value, data);
   }
   onChange(msg) {}
 }
