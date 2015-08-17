@@ -13,11 +13,7 @@ describe('collection testing', function() {
     done()
   });
 
-  after(function(done) {
-    done();
-  });
-
-  describe('item', function() {
+  describe('collection', function() {
 
     it('url should equal to /user', function() {
       assert.equal(store.socket.url, '/user');
@@ -53,15 +49,16 @@ describe('collection testing', function() {
       assert.equal(store.value[0].name, 'Michael');
       assert.equal(store.value[0].job, 'developer');
     });
-    it('should emit a desroyed event and have 2 record', function() {
+    it('should emit a destroyed event and have 2 record', function(done) {
       store.on('remove', function(data){
         assert.equal(data.length, 2);
+        done()
       });
       store.onChange({verb: 'destroyed', id: 1});
     });
     it('should update one item of store', function() {
       store.emit('sync', {id:2, name:"Bobby"});
-      assert.equal("Bobby", store.value[0].name);
+      assert.equal("Bobby", store.value[1].name);
     });
 
 

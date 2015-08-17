@@ -14,10 +14,6 @@ describe('item testing', function() {
     done()
   });
 
-  after(function(done) {
-    done();
-  });
-
   describe('item', function() {
     it('id should equal to 1', function() {
       assert.equal(item.value.id, 1);
