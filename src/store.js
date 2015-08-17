@@ -1,5 +1,4 @@
 import {EventEmitter} from 'events'
-import objectAssign from 'object-assign'
 import {Transport} from './transport.js'
 
 export class Store extends EventEmitter {
@@ -8,10 +7,6 @@ export class Store extends EventEmitter {
     this.belongs = props.belongs;
     this.socket = new Transport(props);//identity & root
     this.startListening();
-  }
-
-  objectAssign(...col) {
-    objectAssign(...col);
   }
 
   startListening() {
