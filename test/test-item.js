@@ -22,7 +22,7 @@ describe('item testing', function() {
       assert.equal(item.value.name, 'Mike');
     });
     it('name should not equal to Mike', function() {
-      item.value = {name: 'Bob'};
+      item.update({name: 'Bob'});
       assert.notEqual(item.value.name, 'Mike');
     });
     it('name should equal to Bob', function() {
@@ -32,11 +32,11 @@ describe('item testing', function() {
       assert.equal(item.value.id, 1);
     });
     it('url should equal /user/1', function() {
-      item.value = {id: 2, name: 'Paul'};
+      item.update({id: 2, name: 'Paul'});
       assert.equal(item.socket.url, '/user/1');
     });
     it('url should not equal /user/2', function() {
-      item.value = {id: 2, name: 'Paul'};
+      item.update({id: 2, name: 'Paul'});
       assert.notEqual(item.socket.url, '/user/2');
     });
     it('should update name to Jo', function() {

@@ -11,18 +11,6 @@ export class StoreCollection extends Store {
   get value() {
     return this._value.data;
   }
-  set value(data) {
-    this._value = ImmutStore({data: data});
-  }
-
-
-  // get value() {
-  //   return this._value;
-  // }
-  // set value(data) {
-  //   this._value = data;
-  // }
-
   post(data) {
     this.socket.post(data, this.add.bind(this));
   }
@@ -31,7 +19,7 @@ export class StoreCollection extends Store {
   }
 
   add(data) {
-    this._value = this._value.data.push(data);
+    this._value = this.value.push(data);
     this.emit('add', this.value);
   }
   remove(id) {
@@ -39,6 +27,12 @@ export class StoreCollection extends Store {
       id = id.id;
     this._value = this.value.splice(this.value.find((v) => v.id === id),1);
     this.emit('remove', this.value);
+  }
+  update(data) {
+    this._value = this._value.set('data',data);
+    this.emit('update', this.value);
+    if (this.belongs)
+      this.belongs.emit('sync', this.value);
   }
 
   findAndUpdate(data) {
@@ -55,7 +49,7 @@ export class StoreCollection extends Store {
         this.add(msg.data);
         break;
       case "updated":
-        this.value = msg.data;
+        this.update(msg.data);
         break;
       case "destroyed":
         this.remove(msg.id);

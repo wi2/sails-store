@@ -22,18 +22,13 @@ export class Store extends EventEmitter {
   get() {
     this.socket.get(this.update.bind(this));
   }
-  put() {}
-  post(data) {}
-  delete(id) {}
+  // put() {}
+  // post(data) {}
+  // delete(id) {}
 
-  add(data) {}
-  remove(id) {}
-  update(data) {
-    this.value = data;
-    this.emit('update', this.value);
-    if (this.belongs)
-      this.belongs.emit('sync', this.value);
-  }
+  // add(data) {}
+  // remove(id) {}
+  // update(data) {}
 
-  onChange(msg) {}
+  // onChange(msg) {}
 }

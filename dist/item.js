@@ -36,6 +36,14 @@ var StoreItem = (function (_Store) {
       this.socket.put(data, this.update.bind(this));
     }
   }, {
+    key: 'update',
+    value: function update(data) {
+      if (data.id) delete data.id;
+      this._value = this.value.merge(data);
+      this.emit('update', this.value);
+      if (this.belongs) this.belongs.emit('sync', this.value);
+    }
+  }, {
     key: 'onChange',
     value: function onChange(msg) {
       if (msg.verb === 'updated' && msg.id === this.value.id) {
@@ -46,10 +54,6 @@ var StoreItem = (function (_Store) {
     key: 'value',
     get: function get() {
       return this._value.data;
-    },
-    set: function set(data) {
-      if (data.id) delete data.id;
-      this._value = this._value.data.merge(data);
     }
   }]);
 

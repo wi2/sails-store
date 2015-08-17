@@ -10,14 +10,17 @@ export class StoreItem extends Store {
   get value() {
     return this._value.data;
   }
-  set value(data) {
-    if (data.id)
-      delete data.id;
-    this._value = this._value.data.merge(data)
-  }
-
   put(data) {
     this.socket.put(data, this.update.bind(this));
+  }
+
+  update(data) {
+    if (data.id)
+      delete data.id;
+    this._value = this.value.merge(data)
+    this.emit('update', this.value);
+    if (this.belongs)
+      this.belongs.emit('sync', this.value);
   }
 
   onChange(msg) {

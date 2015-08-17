@@ -33,14 +33,6 @@ var StoreCollection = (function (_Store) {
 
   _createClass(StoreCollection, [{
     key: 'post',
-
-    // get value() {
-    //   return this._value;
-    // }
-    // set value(data) {
-    //   this._value = data;
-    // }
-
     value: function post(data) {
       this.socket.post(data, this.add.bind(this));
     }
@@ -52,7 +44,7 @@ var StoreCollection = (function (_Store) {
   }, {
     key: 'add',
     value: function add(data) {
-      this._value = this._value.data.push(data);
+      this._value = this.value.push(data);
       this.emit('add', this.value);
     }
   }, {
@@ -63,6 +55,13 @@ var StoreCollection = (function (_Store) {
         return v.id === id;
       }), 1);
       this.emit('remove', this.value);
+    }
+  }, {
+    key: 'update',
+    value: function update(data) {
+      this._value = this._value.set('data', data);
+      this.emit('update', this.value);
+      if (this.belongs) this.belongs.emit('sync', this.value);
     }
   }, {
     key: 'findAndUpdate',
@@ -81,7 +80,7 @@ var StoreCollection = (function (_Store) {
           this.add(msg.data);
           break;
         case 'updated':
-          this.value = msg.data;
+          this.update(msg.data);
           break;
         case 'destroyed':
           this.remove(msg.id);
@@ -92,9 +91,6 @@ var StoreCollection = (function (_Store) {
     key: 'value',
     get: function get() {
       return this._value.data;
-    },
-    set: function set(data) {
-      this._value = (0, _immutableStore2['default'])({ data: data });
     }
   }]);
 
