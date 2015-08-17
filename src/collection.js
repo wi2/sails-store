@@ -31,16 +31,18 @@ export class StoreCollection extends Store {
   update(data) {
     this._value = this._value.set('data',data);
     this.emit('update', this.value);
-    if (this.belongs)
-      this.belongs.emit('sync', this.value);
   }
 
   findAndUpdate(data) {
     for (var i=0, len=this.value.length; i < len; i++) {
       if (this.value[i].id === data.id) {
         this._value = this.value[i].merge(data);
+        if (this.belongs)
+          this.belongs.emit('sync', data);
+
       }
     }
+    // this.emit('update', this.value);
   }
 
   onChange (msg) {
