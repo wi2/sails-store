@@ -46,9 +46,6 @@ var Store = (function (_EventEmitter) {
     value: function get() {
       this.socket.get(this.update.bind(this));
     }
-  }, {
-    key: 'maj',
-
     // put() {}
     // post(data) {}
     // delete(id) {}
@@ -56,9 +53,6 @@ var Store = (function (_EventEmitter) {
     // add(data) {}
     // remove(id) {}
     // update(data) {}
-    value: function maj(data) {
-      this._value = this._value.set('data', data);
-    }
 
     // onChange(msg) {}
 

@@ -51,7 +51,8 @@ export class StoreCollection extends Store {
         this.add(msg.data);
         break;
       case "updated":
-        this.update(msg.data);
+        if (!msg.id)
+          this.update(msg.data);
         break;
       case "destroyed":
         this.remove(msg.id);

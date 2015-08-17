@@ -29,9 +29,6 @@ export class Store extends EventEmitter {
   // add(data) {}
   // remove(id) {}
   // update(data) {}
-  maj(data) {
-    this._value = this._value.set('data',data)
-  }
 
   // onChange(msg) {}
 }
