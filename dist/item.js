@@ -20,11 +20,15 @@ var _immutableStore = require('immutable-store');
 
 var _immutableStore2 = _interopRequireDefault(_immutableStore);
 
+var _transportJs = require('./transport.js');
+
 var StoreItem = (function (_Store) {
   function StoreItem(props) {
     _classCallCheck(this, StoreItem);
 
     _get(Object.getPrototypeOf(StoreItem.prototype), 'constructor', this).call(this, props);
+    this.socket = new _transportJs.Transport(props); //identity & root
+    this.startListening();
     this._value = (0, _immutableStore2['default'])({ data: props.value || props.item || {} });
   }
 
@@ -38,15 +42,16 @@ var StoreItem = (function (_Store) {
   }, {
     key: 'update',
     value: function update(data) {
-      if (data.id) delete data.id;
-      this._value = this.value.merge(data);
+      // data.id = this.value.id;
+      var tmp = this.value.merge(data);
+      if (Array.isArray(tmp.data)) this._value = this._value.set('data', data); //this.value.merge(data)
+      else this._value = tmp;
       this.emit('update', this.value);
-      if (this.belongs) this.belongs.emit('sync', this.value);
     }
   }, {
     key: 'onChange',
     value: function onChange(msg) {
-      if (msg.verb === 'updated' && msg.id === this.value.id) {
+      if (msg.verb === 'updated' && msg.id == this.value.id) {
         this.update(msg.data);
       }
     }

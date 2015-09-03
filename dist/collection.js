@@ -20,13 +20,16 @@ var _immutableStore = require('immutable-store');
 
 var _immutableStore2 = _interopRequireDefault(_immutableStore);
 
+var _transportJs = require('./transport.js');
+
 var StoreCollection = (function (_Store) {
   function StoreCollection(props) {
     _classCallCheck(this, StoreCollection);
 
     _get(Object.getPrototypeOf(StoreCollection.prototype), 'constructor', this).call(this, props);
+    this.socket = new _transportJs.Transport(props); //identity & root
+    this.startListening();
     this._value = (0, _immutableStore2['default'])({ data: props.value || props.items || [] });
-    this.on('sync', this.findAndUpdate.bind(this));
   }
 
   _inherits(StoreCollection, _Store);
@@ -51,9 +54,13 @@ var StoreCollection = (function (_Store) {
     key: 'remove',
     value: function remove(id) {
       if (id.id) id = id.id;
-      this._value = this.value.splice(this.value.find(function (v) {
-        return v.id === id;
-      }), 1);
+      var key;
+      for (var i = 0, len = this.value.length; i < len; i++) {
+        if (this.value[i].id == id) {
+          key = i;
+        }
+      }
+      this._value = this.value.splice(key, 1);
       this.emit('remove', this.value);
     }
   }, {
@@ -64,14 +71,16 @@ var StoreCollection = (function (_Store) {
     }
   }, {
     key: 'findAndUpdate',
-    value: function findAndUpdate(data) {
+    value: function findAndUpdate(data, id) {
       for (var i = 0, len = this.value.length; i < len; i++) {
-        if (this.value[i].id === data.id) {
-          this._value = this.value[i].merge(data);
-          if (this.belongs) this.belongs.emit('sync', data);
+        if (this.value[i].id === id) {
+          data.id = id;
+          var tmp = {};
+          this.objectAssign(tmp, this.value[i], data);
+          this._value = this.value.splice(i, 1, tmp);
         }
       }
-      // this.emit('update', this.value);
+      this.emit('update', this.value);
     }
   }, {
     key: 'onChange',
@@ -81,7 +90,7 @@ var StoreCollection = (function (_Store) {
           this.add(msg.data);
           break;
         case 'updated':
-          if (!msg.id) this.update(msg.data);
+          this.findAndUpdate(msg.data, msg.id);
           break;
         case 'destroyed':
           this.remove(msg.id);

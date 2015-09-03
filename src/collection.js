@@ -1,11 +1,13 @@
 import {Store} from './store.js'
 import ImmutStore from 'immutable-store'
+import {Transport} from './transport.js'
 
 export class StoreCollection extends Store {
   constructor(props) {
     super(props);
+    this.socket = new Transport(props);//identity & root
+    this.startListening();
     this._value = ImmutStore({data: props.value||props.items||[]});
-    this.on('sync', this.findAndUpdate.bind(this));
   }
 
   get value() {
@@ -25,7 +27,13 @@ export class StoreCollection extends Store {
   remove(id) {
     if (id.id)
       id = id.id;
-    this._value = this.value.splice(this.value.find((v) => v.id === id),1);
+    var key;
+    for(var i=0, len=this.value.length; i<len; i++) {
+      if (this.value[i].id == id) {
+        key = i;
+      }
+    }
+    this._value = this.value.splice(key,1)
     this.emit('remove', this.value);
   }
   update(data) {
@@ -33,16 +41,16 @@ export class StoreCollection extends Store {
     this.emit('update', this.value);
   }
 
-  findAndUpdate(data) {
+  findAndUpdate(data, id) {
     for (var i=0, len=this.value.length; i < len; i++) {
-      if (this.value[i].id === data.id) {
-        this._value = this.value[i].merge(data);
-        if (this.belongs)
-          this.belongs.emit('sync', data);
-
+      if (this.value[i].id === id) {
+        data.id = id;
+        var tmp = {};
+        this.objectAssign(tmp, this.value[i], data);
+        this._value = this.value.splice(i, 1, tmp);
       }
     }
-    // this.emit('update', this.value);
+    this.emit('update', this.value);
   }
 
   onChange (msg) {
@@ -51,8 +59,7 @@ export class StoreCollection extends Store {
         this.add(msg.data);
         break;
       case "updated":
-        if (!msg.id)
-          this.update(msg.data);
+        this.findAndUpdate(msg.data, msg.id);
         break;
       case "destroyed":
         this.remove(msg.id);

@@ -1,10 +1,10 @@
 import {EventEmitter} from 'events'
+import objectAssign from 'object-assign'
 import {Transport} from './transport.js'
 
 export class Store extends EventEmitter {
   constructor(props) {
     super(props);
-    this.belongs = props.belongs;
     this.socket = new Transport(props);//identity & root
     this.startListening();
   }
@@ -31,4 +31,8 @@ export class Store extends EventEmitter {
   // update(data) {}
 
   // onChange(msg) {}
+
+  objectAssign(...col) {
+    objectAssign(...col);
+  }
 }

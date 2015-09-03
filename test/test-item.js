@@ -40,6 +40,7 @@ describe('item testing', function() {
       assert.notEqual(item.socket.url, '/user/2');
     });
     it('should update name to Jo', function() {
+      assert.equal(item.value.name, 'Paul');
       item.update({name: 'Jo'});
       assert.equal(item.value.name, 'Jo');
     });
