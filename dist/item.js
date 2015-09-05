@@ -42,16 +42,15 @@ var StoreItem = (function (_Store) {
   }, {
     key: 'update',
     value: function update(data) {
-      // data.id = this.value.id;
+      if (Array.isArray(data)) return;
       var tmp = this.value.merge(data);
-      if (Array.isArray(tmp.data)) this._value = this._value.set('data', data); //this.value.merge(data)
-      else this._value = tmp;
+      this._value = Array.isArray(tmp.data) ? this._value.set('data', data) : tmp;
       this.emit('update', this.value);
     }
   }, {
     key: 'onChange',
     value: function onChange(msg) {
-      if (msg.verb === 'updated' && msg.id == this.value.id) {
+      if (msg.verb === 'updated' && msg.data && msg.id == this.value.id) {
         this.update(msg.data);
       }
     }

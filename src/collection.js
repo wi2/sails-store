@@ -9,7 +9,6 @@ export class StoreCollection extends Store {
     this.startListening();
     this._value = ImmutStore({data: props.value||props.items||[]});
   }
-
   get value() {
     return this._value.data;
   }
@@ -19,7 +18,6 @@ export class StoreCollection extends Store {
   delete(id) {
     this.socket.delete(id, this.remove.bind(this));
   }
-
   add(data) {
     this._value = this.value.push(data);
     this.emit('add', this.value);
@@ -29,9 +27,7 @@ export class StoreCollection extends Store {
       id = id.id;
     var key;
     for(var i=0, len=this.value.length; i<len; i++) {
-      if (this.value[i].id == id) {
-        key = i;
-      }
+      if (this.value[i].id == id) key = i;
     }
     this._value = this.value.splice(key,1)
     this.emit('remove', this.value);
@@ -40,7 +36,6 @@ export class StoreCollection extends Store {
     this._value = this._value.set('data',data);
     this.emit('update', this.value);
   }
-
   findAndUpdate(data, id) {
     for (var i=0, len=this.value.length; i < len; i++) {
       if (this.value[i].id === id) {
@@ -52,7 +47,6 @@ export class StoreCollection extends Store {
     }
     this.emit('update', this.value);
   }
-
   onChange (msg) {
     switch(msg.verb) {
       case "created":

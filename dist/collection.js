@@ -56,9 +56,7 @@ var StoreCollection = (function (_Store) {
       if (id.id) id = id.id;
       var key;
       for (var i = 0, len = this.value.length; i < len; i++) {
-        if (this.value[i].id == id) {
-          key = i;
-        }
+        if (this.value[i].id == id) key = i;
       }
       this._value = this.value.splice(key, 1);
       this.emit('remove', this.value);
